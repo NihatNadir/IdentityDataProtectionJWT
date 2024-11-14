@@ -4,6 +4,7 @@ using IdentityAndDataProtection.Services;
 using IdentityDataProtectionJWT.Dtos;
 using IdentityDataProtectionJWT.Jwt;
 using IdentityDataProtectionJWT.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -43,6 +44,7 @@ namespace IdentityAndDataProtection.Controllers
         }
 
         [HttpPost("login")]
+        
         public async Task<IActionResult> Login(LoginRequest login)
         {
             var loginUserDto = new LoginUserDto
@@ -82,6 +84,13 @@ namespace IdentityAndDataProtection.Controllers
                 Token = token
             });
 
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "User,Admin")]
+        public IActionResult User()
+        {
+            return Ok();
         }
 
 
